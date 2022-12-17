@@ -8,7 +8,7 @@ from nox.sessions import Session
 
 
 nox.options.sessions = 'lint', 'mypy', 'tests'
-locations = 'nb_query', 'tests', 'noxfile.py'
+locations = 'nb_query', 'tests', 'noxfile.py', 'docs/conf.py'
 
 
 def install_with_constraints(session: Session, *args: str, **kwargs: Any) -> None:
@@ -52,7 +52,7 @@ def lint(session: Session) -> None:
     install_with_constraints(
         session,
         'flake8',
-        "flake8-annotations",
+        'flake8-annotations',
         'flake8-bandit',
         'flake8-black',
         'flake8-bugbear',
@@ -69,3 +69,12 @@ def mypy(session: Session) -> None:
     args = session.posargs or locations
     install_with_constraints(session, 'mypy')
     session.run('mypy', *args)
+
+
+@nox.session(python=['3.8'])
+def docs(session: Session) -> None:
+    """Build the documentation."""
+    install_with_constraints(
+        session, 'sphinx', 'sphinx-autodoc-typehints', 'pandas', 'typer'
+    )
+    session.run('sphinx-build', 'docs', 'docs/_build')
