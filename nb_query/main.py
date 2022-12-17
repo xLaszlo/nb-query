@@ -54,8 +54,8 @@ def nb_query(query, fnames=None):
 #
 # in CLI:
 #
-# python nb_query.py "he(ll|r)o"
-# python nb_query.py "he(ll|r)o" --fnames "<notebook dir>"
+# python nb_query.py 'he(ll|r)o'
+# python nb_query.py 'he(ll|r)o' --fnames '<notebook dir>'
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app()
