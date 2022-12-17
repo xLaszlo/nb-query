@@ -218,6 +218,22 @@ pycodestyle = ">=2.10.0,<2.11.0"
 pyflakes = ">=3.0.0,<3.1.0"
 
 [[package]]
+name = "flake8-annotations"
+version = "2.9.1"
+description = "Flake8 Type Annotation Checks"
+category = "dev"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "flake8-annotations-2.9.1.tar.gz", hash = "sha256:11f09efb99ae63c8f9d6b492b75fe147fbc323179fddfe00b2e56eefeca42f57"},
+    {file = "flake8_annotations-2.9.1-py3-none-any.whl", hash = "sha256:a4385158a7a9fc8af1d8820a2f4c8d03387997006a83f5f8bfe5bc6085bdf88a"},
+]
+
+[package.dependencies]
+attrs = ">=21.4"
+flake8 = ">=3.7"
+
+[[package]]
 name = "flake8-bandit"
 version = "4.1.1"
 description = "Automated security testing with bandit and flake8."
@@ -839,4 +855,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = '^3.8.1'
-content-hash = "b1cc4de23a0fa0c54d765515902021a62d29ed8a7b053f33c3933f3082fce0b7"
+content-hash = "24e8fdd44fda71ec66b5b53a68b00c79b611cbf3b27954f95efb7af43dac77bd"
