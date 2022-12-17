@@ -21,4 +21,4 @@ def black(session):
 def lint(session):
     args = session.posargs or locations
     session.install('flake8', 'flake8-black')
-    session.run('flake8', *args) 
+    session.run('flake8', *args)
