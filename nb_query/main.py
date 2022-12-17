@@ -6,10 +6,12 @@ import pandas as pd
 
 app = typer.Typer()
 
+
 @app.command()
 def main(query, fnames=None):
     result = nb_query(query, fnames)
     print(result)
+
 
 def nb_query(query, fnames=None):
     if isinstance(query, str):
@@ -19,21 +21,27 @@ def nb_query(query, fnames=None):
     if fnames is None:
         fnames = '.'
     if isinstance(fnames, str):
-        fnames = sum([
-            [f'{dirname}/{fname}' for fname in fnames_ if fname.endswith('.ipynb')]
-            for dirname, _, fnames_ in os.walk(fnames) if '.ipynb_checkpoints' not in dirname
-        ], [])
+        fnames = sum(
+            [
+                [f'{dirname}/{fname}' for fname in fnames_ if fname.endswith('.ipynb')]
+                for dirname, _, fnames_ in os.walk(fnames)
+                if '.ipynb_checkpoints' not in dirname
+            ],
+            [],
+        )
     res = []
     for fname in fnames:
         for cell in json.loads(open(fname).read())['cells']:
             for ind, line in enumerate(cell['source']):
                 if query_fun(line.strip()):
-                    res.append({
-                        'fname': fname,
-                        'line': line.strip(),
-                        'cell': ind,
-                        'count': cell.get('execution_count') or 0
-                    })
+                    res.append(
+                        {
+                            'fname': fname,
+                            'line': line.strip(),
+                            'cell': ind,
+                            'count': cell.get('execution_count') or 0,
+                        }
+                    )
     return pd.DataFrame(res)
 
 
