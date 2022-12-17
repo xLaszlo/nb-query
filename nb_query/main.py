@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from typing import Callable, Optional, Union
 
 import pandas as pd
 import typer
@@ -9,12 +10,12 @@ app = typer.Typer()
 
 
 @app.command()
-def main(query, fnames=None):
+def main(query: str, fnames: Optional[str] = None) -> None:
     result = nb_query(query, fnames)
     print(result)
 
 
-def nb_query(query, fnames=None):
+def nb_query(query: Union[str, Callable], fnames: Optional[str] = None) -> pd.DataFrame:
     if isinstance(query, str):
         query_fun = lambda line: re.match(f'.*{query}.*', line)
     else:

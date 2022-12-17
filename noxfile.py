@@ -3,7 +3,7 @@ import tempfile
 import nox
 
 
-nox.options.sessions = 'lint', 'tests'
+nox.options.sessions = 'lint', 'mypy', 'tests'
 locations = 'nb_query', 'tests', 'noxfile.py'
 
 
@@ -12,7 +12,7 @@ def install_with_constraints(session, *args, **kwargs):
         session.run(
             'poetry',
             'export',
-            '--dev',
+            '--with=dev',
             '--format=constraints.txt',
             '--without-hashes',
             f'--output={constraints.name}',
@@ -24,7 +24,7 @@ def install_with_constraints(session, *args, **kwargs):
 @nox.session(python=['3.8'])
 def tests(session):
     args = session.posargs or ['--cov']
-    session.run('poetry', 'install', '--no-dev', external=True)
+    session.run('poetry', 'install', '--only=main', external=True)
     install_with_constraints(
         session, 'coverage[toml]', 'pytest', 'pytest-cov', 'pytest-mock'
     )
@@ -50,3 +50,10 @@ def lint(session):
         'flake8-import-order',
     )
     session.run('flake8', *args)
+
+
+@nox.session(python=['3.8'])
+def mypy(session):
+    args = session.posargs or locations
+    install_with_constraints(session, 'mypy')
+    session.run('mypy', *args)

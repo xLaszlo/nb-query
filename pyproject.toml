@@ -29,6 +29,7 @@ flake8-bandit = '^4.1.1'
 flake8-black = '^0.3.5'
 flake8-bugbear = '^22.12.6'
 flake8-import-order = '^0.18.2'
+mypy = "^0.991"
 
 [build-system]
 requires = ['poetry-core']
