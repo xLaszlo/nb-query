@@ -1,8 +1,11 @@
 [tool.poetry]
 name = "nb-query"
 version = "0.1.0"
-description = ""
+description = "Python package to search in jupyter notebooks"
 authors = ["Laszlo Sragner <sragner@gmail.com>"]
+license = "MIT"
+homepage = "https://github.com/xLaszlo/nb-query"
+repository = "https://github.com/xLaszlo/nb-query"
 readme = "README.md"
 packages = [{include = "nb_query"}]
 
