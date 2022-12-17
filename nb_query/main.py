@@ -1,3 +1,4 @@
+"""Function to search in selected notebooks with keywords, regex or functions."""
 import json
 import os
 import re
@@ -11,6 +12,7 @@ app = typer.Typer()
 
 @app.command()
 def main(query: str, fnames: Optional[str] = None) -> None:
+    """Command line wrapper for Typer."""
     result = nb_query(query, fnames)
     print(result)
 
@@ -18,6 +20,7 @@ def main(query: str, fnames: Optional[str] = None) -> None:
 def nb_query(
     query: Union[str, Callable], fnames: Union[None, str, List[str], List[Any]] = None
 ) -> pd.DataFrame:
+    """Function to search in selected notebooks with keywords, regex or functions."""
     if isinstance(query, str):
         query_fun = lambda line: re.match(f'.*{query}.*', line)
     else:

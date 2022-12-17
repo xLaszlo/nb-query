@@ -1,3 +1,5 @@
+"""Tests."""
+
 from typer.testing import CliRunner
 
 from nb_query.main import app
@@ -9,6 +11,7 @@ EXPECTED_STDOUT = """                                  fname           line  cel
 
 
 def test_app():
+    """Tests if it finds the right string."""
     result = runner.invoke(app, ['Hello'])
     assert result.exit_code == 0
     assert EXPECTED_STDOUT in result.stdout
