@@ -7,6 +7,7 @@ runner = CliRunner()
 EXPECTED_STDOUT = """                                  fname           line  cell  count
 0  ./tests/NB_Query_Test_Notebook.ipynb  "Hello World"     0      1"""
 
+
 def test_app():
     result = runner.invoke(app, ['Hello'])
     assert result.exit_code == 0

@@ -1,0 +1,6 @@
+[flake8]
+select = B,B9,BLK,C,E,F,I,W
+ignore = E203,E501,W503,E731
+max-line-length = 80
+application-import-names = nb_query,tests
+import-order-style = google
