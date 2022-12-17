@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "nb-query"
+version = "0.1.0"
+description = ""
+authors = ["Laszlo Sragner <sragner@gmail.com>"]
+readme = "README.md"
+packages = [{include = "nb_query"}]
+
+[tool.poetry.scripts]
+nb-query = "nb_query.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = {extras = ["all"], version = "^0.7.0"}
+pandas = "^1.5.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
