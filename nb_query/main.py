@@ -1,7 +1,7 @@
 import json
 import os
 import re
-from typing import Callable, Optional, Union
+from typing import Any, Callable, List, Optional, Union
 
 import pandas as pd
 import typer
@@ -15,7 +15,9 @@ def main(query: str, fnames: Optional[str] = None) -> None:
     print(result)
 
 
-def nb_query(query: Union[str, Callable], fnames: Optional[str] = None) -> pd.DataFrame:
+def nb_query(
+    query: Union[str, Callable], fnames: Union[None, str, List[str], List[Any]] = None
+) -> pd.DataFrame:
     if isinstance(query, str):
         query_fun = lambda line: re.match(f'.*{query}.*', line)
     else:
