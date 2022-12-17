@@ -1,8 +1,11 @@
 [tool.poetry]
 name = "nb-query"
 version = "0.1.0"
-description = ""
+description = "Python package to search in jupyter notebooks"
 authors = ["Laszlo Sragner <sragner@gmail.com>"]
+license = "MIT"
+homepage = "https://github.com/xLaszlo/nb-query"
+repository = "https://github.com/xLaszlo/nb-query"
 readme = "README.md"
 packages = [{include = "nb_query"}]
 
@@ -15,6 +18,20 @@ typer = {extras = ["all"], version = "^0.7.0"}
 pandas = "^1.5.2"
 
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+coverage = {version = "^6.5.0", extras = ["toml"]}
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.paths]
+source = ["nb_query", "tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["nb_query"]
+
+[tool.coverage.report]
+show_missing = true
