@@ -12,7 +12,13 @@ app = typer.Typer()
 
 @app.command()
 def main(query: str, fnames: Optional[str] = None) -> None:
-    """Command line wrapper for Typer."""
+    """Command line wrapper for Typer. Searches all files in the given directories.
+
+    Args:
+        query (str): Keyword, regex expression or function
+        fnames (Optional[str], optional): list of directories to search.
+            Defaults to current.
+    """
     result = nb_query(query, fnames)
     print(result)
 
@@ -20,7 +26,17 @@ def main(query: str, fnames: Optional[str] = None) -> None:
 def nb_query(
     query: Union[str, Callable], fnames: Union[None, str, List[str], List[Any]] = None
 ) -> pd.DataFrame:
-    """Function to search in selected notebooks with keywords, regex or functions."""
+    """Function to search in selected notebooks with keywords, regex or functions.
+
+    Args:
+        query (str): Keyword, regex expression or function
+        fnames (Optional[str], optional): list of directories to search.
+            Defaults to current.
+
+    Returns:
+        pd.DataFrame: Table of results: notebook location, line matching the query,
+        cell number and cell count
+    """
     if isinstance(query, str):
         query_fun = lambda line: re.match(f'.*{query}.*', line)
     else:
