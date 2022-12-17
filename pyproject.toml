@@ -8,6 +8,7 @@ homepage = 'https://github.com/xLaszlo/nb-query'
 repository = 'https://github.com/xLaszlo/nb-query'
 readme = 'README.md'
 packages = [{include = 'nb_query'}]
+documentation = "https://nb-query.readthedocs.io"
 
 [tool.poetry.scripts]
 nb-query = 'nb_query.main:app'
