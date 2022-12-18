@@ -16,7 +16,7 @@ def main(query: str, fnames: Optional[str] = None) -> None:
 
     Args:
         query (str): Keyword, regex expression or function
-        fnames (Optional[str], optional): directory search.
+        fnames (Optional[str], optional): directory to search.
             Defaults to current directory.
     """
     result = nb_query(query, fnames)
