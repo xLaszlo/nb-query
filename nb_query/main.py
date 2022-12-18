@@ -2,7 +2,7 @@
 import json
 import os
 import re
-from typing import Any, Callable, List, Optional, Union
+from typing import Callable, List, Optional, Union
 
 import pandas as pd
 import typer
@@ -16,22 +16,24 @@ def main(query: str, fnames: Optional[str] = None) -> None:
 
     Args:
         query (str): Keyword, regex expression or function
-        fnames (Optional[str], optional): list of directories to search.
-            Defaults to current.
+        fnames (Optional[str], optional): directory search.
+            Defaults to current directory.
     """
     result = nb_query(query, fnames)
     print(result)
 
 
 def nb_query(
-    query: Union[str, Callable], fnames: Union[None, str, List[str], List[Any]] = None
+    query: Union[str, Callable], fnames: Union[None, str, List[str]] = None
 ) -> pd.DataFrame:
     """Function to search in selected notebooks with keywords, regex or functions.
 
     Args:
         query (str): Keyword, regex expression or function
-        fnames (Optional[str], optional): list of directories to search.
-            Defaults to current.
+        fnames:
+            str: directory to search (recursively).
+            None: current directory
+            List[str]: list of notebooks to search
 
     Returns:
         pd.DataFrame: Table of results: notebook location, line matching the query,
@@ -44,28 +46,32 @@ def nb_query(
     if fnames is None:
         fnames = '.'
     if isinstance(fnames, str):
-        fnames = sum(
-            [
-                [f'{dirname}/{fname}' for fname in fnames_ if fname.endswith('.ipynb')]
-                for dirname, _, fnames_ in os.walk(fnames)
-                if '.ipynb_checkpoints' not in dirname
-            ],
-            [],
-        )
-    res = []
-    for fname in fnames:
-        for cell in json.loads(open(fname).read())['cells']:
+        notebooks = []
+        for dirname, _, fnames_ in os.walk(fnames):
+            if '.ipynb_checkpoints' not in dirname:
+                notebooks.extend(
+                    [
+                        f'{dirname}/{fname}'
+                        for fname in fnames_
+                        if fname.endswith('.ipynb')
+                    ]
+                )
+    else:
+        notebooks = fnames
+    result = []
+    for notebook in notebooks:
+        for cell in json.loads(open(notebook).read())['cells']:
             for ind, line in enumerate(cell['source']):
                 if query_fun(line.strip()):
-                    res.append(
+                    result.append(
                         {
-                            'fname': fname,
+                            'fname': notebook,
                             'line': line.strip(),
                             'cell': ind,
                             'count': cell.get('execution_count') or 0,
                         }
                     )
-    return pd.DataFrame(res)
+    return pd.DataFrame(result)
 
 
 # Usage:
