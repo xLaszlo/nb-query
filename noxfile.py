@@ -26,7 +26,7 @@ def install_with_constraints(session: Session, *args: str, **kwargs: Any) -> Non
         session.install(f'--constraint={constraints.name}', *args, **kwargs)
 
 
-@nox.session(python=['3.8'])
+@nox.session(python=['3.11'])
 def tests(session: Session) -> None:
     """Run the test suite."""
     args = session.posargs or ['--cov']
@@ -37,7 +37,7 @@ def tests(session: Session) -> None:
     session.run('pytest', *args)
 
 
-@nox.session(python='3.8')
+@nox.session(python='3.11')
 def black(session: Session) -> None:
     """Run black code formatter."""
     args = session.posargs or locations
@@ -45,7 +45,7 @@ def black(session: Session) -> None:
     session.run('black', *args)
 
 
-@nox.session(python=['3.8'])
+@nox.session(python=['3.11'])
 def lint(session: Session) -> None:
     """Lint using flake8."""
     args = session.posargs or locations
@@ -63,7 +63,7 @@ def lint(session: Session) -> None:
     session.run('flake8', *args)
 
 
-@nox.session(python=['3.8'])
+@nox.session(python=['3.11'])
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or locations
@@ -71,7 +71,7 @@ def mypy(session: Session) -> None:
     session.run('mypy', *args)
 
 
-@nox.session(python=['3.8'])
+@nox.session(python=['3.11'])
 def docs(session: Session) -> None:
     """Build the documentation."""
     install_with_constraints(
@@ -81,7 +81,7 @@ def docs(session: Session) -> None:
 
 
 # noxfile.py
-@nox.session(python=['3.8'])
+@nox.session(python=['3.11'])
 def coverage(session: Session) -> None:
     """Upload coverage data."""
     install_with_constraints(session, 'coverage[toml]', "codecov")
